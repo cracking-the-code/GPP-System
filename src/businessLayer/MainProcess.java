@@ -1,4 +1,4 @@
-package main;
+package businessLayer;
 
 public class MainProcess {
 

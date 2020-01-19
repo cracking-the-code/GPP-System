@@ -48,7 +48,7 @@ public class ConfigClass
 			this.setConfTopic = prop.getProperty("setConfTopic");
 			this.spConnections = Integer.parseInt(prop.getProperty("spConnections"));
 			
-			logger.info("Successful COnfiguration!!!");
+			logger.info("Successful Configuration!!!");
 		}
 		catch(Exception e)
 		{

@@ -28,7 +28,6 @@ public class FGP_Manager implements FGP_ManagerInterface
 	@Override
 	public void startProcess() 
 	{
-		
 	}
 
 	@Override
