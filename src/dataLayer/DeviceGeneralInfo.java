@@ -6,8 +6,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Tbl_DeviceMqttInfo")
-public class DeviceMqttInfo 
+@Table(name = "Tbl_DeviceGeneralInfo")
+public class DeviceGeneralInfo 
 {
 	@Id
 	@Column(name = "IdDev", unique = true)
