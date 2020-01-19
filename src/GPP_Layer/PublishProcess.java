@@ -60,12 +60,16 @@ public class PublishProcess implements PpInterface
 	{
 		try 
 		{
+			logger.info("Sending message to topic: " + message.getTopic());
 			IMqttDeliveryToken deMessage = client.publish(message.getTopic(), message.getMessage(), null, new MqttActionHandler());
 		} 
-		catch (MqttException e) 
+		catch (MqttException me) 
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("Error by sending a message to topic: " + message.getTopic());
+			logger.error("\nmsg " + me.getMessage() + 
+						"\nloc " + me.getLocalizedMessage() + 
+						"\ncause " + me.getCause() + 
+						"\nexcep " + me);
 		}
 	}
 	

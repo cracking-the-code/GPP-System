@@ -1,9 +1,9 @@
 package GPP_Layer;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
+import FGP_Layer.Order;
 
 public interface PpManagerInterface 
 {
 	void startManager();
 	void stopManager();
-	void insertMessage(MyMqttMessage message);
+	void insertMessage(String message, String topic);
 }

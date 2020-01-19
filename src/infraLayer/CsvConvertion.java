@@ -3,6 +3,8 @@ package infraLayer;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -13,14 +15,18 @@ import dataLayer.DeviceMeasurement;
 public class CsvConvertion 
 {
 	private static Logger logger = LogManager.getLogger(CsvConvertion.class);
+	private ConfigClass config = ConfigClass.getInstance();
 	
 	private String path;
 	private String id;
 	
 	public CsvConvertion(String id)
 	{
-		this.id = id;	
-		this.path += "/" + this.id + ".csv";
+		this.id = id;
+		LocalDateTime date = LocalDateTime.now();
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("ddMMyyyyHHmmss");
+		String today = date.format(format);
+		this.path = config.getCsvPath() + "/" + today + "_" + this.id + ".csv";
 	}
 	
 	public String convertToCSV(List<DeviceMeasurement> lstDevMea)

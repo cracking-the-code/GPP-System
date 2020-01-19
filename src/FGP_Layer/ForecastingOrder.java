@@ -11,22 +11,20 @@ import dataLayer.FpDataBaseI;
 import dataLayer.PpMySQL;
 import infraLayer.CsvConvertion;
 
-public class ForecastingOrder implements FoInterface, Runnable
+public class ForecastingOrder implements Runnable
 {
 	private static Logger logger = LogManager.getLogger(ForecastingOrder.class);
 	
 	protected BlockingQueue<Order> queue;
-	private long idleMinutes;
-	private String id;
-	private int days;
-	private int period;
-	private Order order;
 	
 	private FpDataBaseI db;
+	private Order order;
+	private int idleMinutes;
 	
-	public ForecastingOrder(BlockingQueue<Order> queue)
+	public ForecastingOrder(BlockingQueue<Order> queue, Order order)
 	{
 		this.queue = queue;
+		this.order = order;
 		this.db = PpMySQL.getInstance();
 	}
 	
@@ -57,19 +55,25 @@ public class ForecastingOrder implements FoInterface, Runnable
 	{
 		try 
 		{
-			List<DeviceMeasurement> lstdevMea = db.getAllDevMeasurement(id, days);
+			logger.info("Starting the query for creation of CSV File :D");
 			
-			CsvConvertion csvObj = new CsvConvertion(id);
-			String path = csvObj.convertToCSV(lstdevMea);
+			List<DeviceMeasurement> lstdevMea = db.getAllDevMeasurement(order.getId(), order.getqueryPeriod());
 			
-			order.setId(this.id);
-			order.setPeriod(this.period);
+			CsvConvertion csvObj = new CsvConvertion(order.getId());
+			String path = csvObj.convertToCSV(lstdevMea);		
 			order.setTrainingCSV(path);
 			
+			logger.info("Creation of CSV Successfully created >:D");
 			return true;
 		}
 		catch(Exception e)
 		{
+			logger.error("Cannot Query or Create the CSV file for: " + order.getId() + " Device :(");
+			logger.error("\nmsg " + e.getMessage() + 
+						 "\nloc " + e.getLocalizedMessage() + 
+						 "\ncause " + e.getCause() + 
+						 "\nexcep " + e);
+			
 			return false;
 		}
 	}
@@ -78,8 +82,8 @@ public class ForecastingOrder implements FoInterface, Runnable
 	{
 		try 
 		{
-			logger.info("This thread for Device: " + id + " Will be sleeping for: " + idleMinutes + " minutes");
-			idleMinutes = idleMinutes * 60000;
+			logger.info("This thread for Device: " + order.getId() + " Will be sleeping for: " + order.getTrainingPeriod() + " minutes");
+			idleMinutes = order.getTrainingPeriod() * 60000;
 			Thread.sleep(idleMinutes);
 		} 
 		catch (InterruptedException e) 
@@ -89,15 +93,4 @@ public class ForecastingOrder implements FoInterface, Runnable
 			throw new RuntimeException(e);
 		}
 	}
-	
-	@Override
-	public void setIddleMinutes(long idleMinutes) { this.idleMinutes = idleMinutes; }
-	@Override
-	public void setId(String id) { this.id = id; }
-	@Override
-	public void setDays(int days) { this.days = days; }
-	@Override
-	public void setPeriod(int period) {this.period = period; }
-	@Override
-	public Order getOrder() { return this.order; }
 }

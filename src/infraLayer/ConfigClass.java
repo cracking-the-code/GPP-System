@@ -20,10 +20,12 @@ public class ConfigClass
 	private String clientID;
 	private String userName;
 	private String password;
-	private int qos;
-	private String monitorTopic;
-	private String getConfTopic;
-	private String setConfTopic;
+
+	private String PredictionTopic;
+	
+	private String csvPath;
+	private String jsonPath;
+	
 	private int spConnections;
 	
 	private ConfigClass() throws Exception
@@ -42,10 +44,11 @@ public class ConfigClass
 			this.clientID = prop.getProperty("clientID");
 			this.userName = prop.getProperty("userName");
 			this.password = prop.getProperty("password");
-			this.qos = Integer.parseInt(prop.getProperty("qos"));
-			this.monitorTopic = prop.getProperty("MonitorTopic");
-			this.getConfTopic = prop.getProperty("getConfTopic");
-			this.setConfTopic = prop.getProperty("setConfTopic");
+			
+			this.PredictionTopic = prop.getProperty("PredictionTopic");
+			
+			this.csvPath = prop.getProperty("csvPath");
+			this.jsonPath = prop.getProperty("jsonPath");
 			this.spConnections = Integer.parseInt(prop.getProperty("spConnections"));
 			
 			logger.info("Successful Configuration!!!");
@@ -91,20 +94,17 @@ public class ConfigClass
 		return password;
 	}
 
-	public int getQos() {
-		return qos;
+	
+	public String getPredictionTopic() {
+		return PredictionTopic;
 	}
 	
-	public String getMonitorTopic() {
-		return monitorTopic;
+	public String getCsvPath() {
+		return csvPath;
 	}
 	
-	public String getGetConfTopic() {
-		return getConfTopic;
-	}
-	
-	public String getSetConfTopic() {
-		return setConfTopic;
+	public String getJsonPath() {
+		return jsonPath;
 	}
 
 	public int getSpConnections() {

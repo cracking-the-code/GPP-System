@@ -13,77 +13,47 @@ public class DeviceGeneralInfo
 	@Column(name = "IdDev", unique = true)
 	private String IdDev;
 	
-	@Column(name = "DevMqttUserId", nullable = false)
-	private String DevMqttUserId;
+	@Column(name = "DevName", nullable = true)
+	private String DevName;
 	
-	@Column(name = "DevMqttUser", nullable = false)
-	private String DevMqttUser;
+	@Column(name = "DevUser", nullable = true)
+	private String DevUser;
 	
-	@Column(name = "DevMqttPass", nullable = false)
-	private String DevMqttPass;
+	@Column(name = "DevPass", nullable = true)
+	private String DevPass;
 	
-	@Column(name = "QoS", nullable = true)
-	private int QoS;
+	@Column(name = "DevLocation", nullable = false)
+	private String DevLocation;
 	
-	@Column(name = "CleanSession", nullable = true)
-	private Boolean CleanSession;
+	@Column(name = "DevIpAddress", nullable = false)
+	private String DevIpAddress;
 	
-	@Column(name = "Persistence", nullable = true)
-	private Boolean Persistence;
+	@Column(name = "queryPeriod", nullable = true)
+	private int queryPeriod;
+	
+	@Column(name = "trainPeriod", nullable = true)
+	private int trainPeriod;
+	
+	@Column(name = "IsActive", nullable = true)
+	private Boolean IsActive;
 
-	public String getIdDev() {
-		return IdDev;
-	}
-
-	public void setIdDev(String idDev) {
-		IdDev = idDev;
-	}
-
-	public String getDevMqttUserId() {
-		return DevMqttUserId;
-	}
-
-	public void setDevMqttUserId(String devMqttUserId) {
-		DevMqttUserId = devMqttUserId;
-	}
-
-	public String getDevMqttUser() {
-		return DevMqttUser;
-	}
-
-	public void setDevMqttUser(String devMqttUser) {
-		DevMqttUser = devMqttUser;
-	}
-
-	public String getDevMqttPass() {
-		return DevMqttPass;
-	}
-
-	public void setDevMqttPass(String devMqttPass) {
-		DevMqttPass = devMqttPass;
-	}
-
-	public int getQoS() {
-		return QoS;
-	}
-
-	public void setQoS(int qoS) {
-		QoS = qoS;
-	}
-
-	public Boolean getCleanSession() {
-		return CleanSession;
-	}
-
-	public void setCleanSession(Boolean cleanSession) {
-		CleanSession = cleanSession;
-	}
-
-	public Boolean getPersistence() {
-		return Persistence;
-	}
-
-	public void setPersistence(Boolean persistence) {
-		Persistence = persistence;
-	}
+	public String getIdDev() { return IdDev; }
+	public String getDevName() { return DevName; }
+	public String getDevUser() { return DevUser; }
+	public String getDevPass() { return DevPass; }
+	public String getDevLocation() { return DevLocation; }
+	public String getDevIpAddress() { return DevIpAddress; }
+	public int getQueryPeriod() { return queryPeriod; }
+	public int getTrainPeriod() { return trainPeriod; }
+	public Boolean getIsActive() { return IsActive; }
+	
+	public void setIdDev(String idDev) { IdDev = idDev; }
+	public void setDevName(String devName) { DevName = devName; }
+	public void setDevUser(String devUser) { DevUser = devUser; }
+	public void setDevPass(String devPass) { DevPass = devPass; }
+	public void setDevLocation(String devLocation) { DevLocation = devLocation; }
+	public void setDevIpAddress(String devIpAddress) { DevIpAddress = devIpAddress; }
+	public void setQueryPeriod(int queryPeriod) { this.queryPeriod = queryPeriod; }
+	public void setTrainPeriod(int trainPeriod) { this.trainPeriod = trainPeriod; }
+	public void setIsActive(Boolean isActive) { IsActive = isActive; }
 }

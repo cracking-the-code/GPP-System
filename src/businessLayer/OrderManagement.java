@@ -15,9 +15,9 @@ import FGP_Layer.Order;
 import FGP_Layer.OrderDispatcher;
 import dataLayer.DeviceGeneralInfo;
 
-public class SysManager
+public class OrderManagement
 {
-	private static Logger logger = LogManager.getLogger(SysManager.class);
+	private static Logger logger = LogManager.getLogger(OrderManagement.class);
 	
 	BlockingQueue<Order> queue = new ArrayBlockingQueue<Order>(1024);
 	Executor pool = Executors.newFixedThreadPool(15);
@@ -28,6 +28,8 @@ public class SysManager
 	{
 		if(fgp.isPossible())
 		{
+			logger.info("Startig the OrderManagement Process!!!");
+			
 			createProducers();
 			createConsumer();
 		}
@@ -35,18 +37,26 @@ public class SysManager
 	
 	private void createProducers()
 	{
-		for(DeviceGeneralInfo dev:fgp.getForecastingDev()) 
+		logger.info("Creation of Order Producers!!!");
+		
+		for(DeviceGeneralInfo device:fgp.getForecastingDev()) 
 		{
-			ForecastingOrder forOrder = new ForecastingOrder(queue);
-			forOrder.setIddleMinutes(dev.getQoS());
-			//Y asi sucesivamente y supongo que de aca tomare los valores ya no quiero pensar :(
+			Order order = new Order();
+			order.setId(device.getIdDev());
+			order.setTrainingPeriod(device.getTrainPeriod());
+			order.setqueryPeriod(order.getqueryPeriod());
+			ForecastingOrder forOrder = new ForecastingOrder(queue, order);
+		
 			pool.execute(forOrder);
+			logger.info("Creation of Order Producer ID: " + device.getIdDev() + " Successful");
 		}
 	}
 	
 	private void createConsumer()
 	{
+		logger.info("Creation of Order Consumer!!!");
 		OrderDispatcher orderDispatch = new OrderDispatcher(queue);
 		pool.execute(orderDispatch);
+		logger.info("Creation of Order Consumer Successfully CREATE!!!");
 	}
 }
