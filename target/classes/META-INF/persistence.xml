@@ -6,7 +6,7 @@
     xsi:schemaLocation="http://java.sun.com/xml/ns/persistence 
     http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
     
-    <persistence-unit name="FHC_System" transaction-type="RESOURCE_LOCAL">
+    <persistence-unit name="GPP_System" transaction-type="RESOURCE_LOCAL">
     
        <provider>org.hibernate.ejb.HibernatePersistence</provider>
         

@@ -20,7 +20,7 @@ public class FGP_Manager implements FGP_ManagerInterface
 
 	private Boolean isPossible = false;
 	private FpDataBaseI db;
-	private List<DeviceGeneralInfo> lstDev;
+	private List<DeviceGeneralInfo> lstDev = null;
 	
 	public FGP_Manager() 
 	{
@@ -38,7 +38,7 @@ public class FGP_Manager implements FGP_ManagerInterface
 	@Override
 	public Boolean isPossible() 
 	{
-		if(lstDev.isEmpty())
+		if(lstDev == null)
 		{
 			logger.info("There are no devices. The process cannot continue :(");
 			return false;

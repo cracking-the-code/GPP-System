@@ -1,6 +1,7 @@
 package dataLayer;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -37,7 +38,7 @@ public class PpMySQL implements FpDataBaseI
 		logger.info("initializing Data Base Connection...");
 		
 		ENTITY_MANAGER_FACTORY = Persistence
-	            .createEntityManagerFactory("GPP&FGP_System");
+	            .createEntityManagerFactory("GPP_System");
 	}
 	
 	@Override
@@ -82,14 +83,14 @@ public class PpMySQL implements FpDataBaseI
 		List<DeviceMeasurement> lstDevMeasurement = null;
 		
 		LocalDateTime minDate = LocalDateTime.now();
-		minDate.minusDays(days);
+		minDate = minDate.minusDays(days);
 		
 		try 
 		{
 			logger.info("The list of Devices will be queried from Tbl_DeviceMeasurement");
 			
-			Query query = em.createQuery("SELECT * FROM Tbl_DeviceMeasurement WHERE IdDev = :idDevice "
-									   + "AND TimeMeasure >= :minDate");
+			Query query = em.createNativeQuery("SELECT * FROM Tbl_DeviceMeasurement WHERE IdDev = :idDevice "
+									   + "AND TimeMeasure >= :minDate", DeviceMeasurement.class);
 			
 			query.setParameter("idDevice", idDev);
 			query.setParameter("minDate", minDate.toString());
@@ -116,13 +117,13 @@ public class PpMySQL implements FpDataBaseI
 	public List<DeviceGeneralInfo> getAllDevGeneralInfo() 
 	{
 		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
-		List<DeviceGeneralInfo> lstDevGeneralInfo = null;
+		List<DeviceGeneralInfo> lstDevGeneralInfo = new ArrayList<DeviceGeneralInfo>();
 		
 		try 
 		{
 			logger.info("The list of Devices will be queried from Tbl_DeviceGeneralInfo");
 			
-			Query query = em.createQuery("SELECT * FROM Tbl_DeviceGeneralInfo WHERE IsActive = 1");
+			Query query = em.createNativeQuery("SELECT * FROM Tbl_DeviceGeneralInfo WHERE IsActive = 1", DeviceGeneralInfo.class);
 			lstDevGeneralInfo = query.getResultList();
 		}
 		catch(Exception e)

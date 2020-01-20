@@ -35,7 +35,7 @@ public class ForecastingOrder implements Runnable
 		{
 			try 
 			{
-				if(queryMeasures())
+				if(queryMeasures()) 
 					queue.put(order);
 				else
 					break;

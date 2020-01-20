@@ -2,6 +2,7 @@ package infraLayer;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -32,7 +33,8 @@ public class CsvConvertion
 	public String convertToCSV(List<DeviceMeasurement> lstDevMea)
 	{
 		logger.info("Starting Creation of CSV file: " + path);
-		try(PrintWriter writer = new PrintWriter(new File(this.path)))
+		File file = new File(this.path);
+		try(PrintWriter writer = new PrintWriter(file))
 		{
 			String csv = csv(lstDevMea);
 			writer.write(csv);

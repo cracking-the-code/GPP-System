@@ -39,15 +39,15 @@ public class OrderManagement
 	{
 		logger.info("Creation of Order Producers!!!");
 		
-		for(DeviceGeneralInfo device:fgp.getForecastingDev()) 
+		for(DeviceGeneralInfo device : fgp.getForecastingDev()) 
 		{
 			Order order = new Order();
 			order.setId(device.getIdDev());
 			order.setTrainingPeriod(device.getTrainPeriod());
-			order.setqueryPeriod(order.getqueryPeriod());
+			order.setqueryPeriod(device.getQueryPeriod());
 			ForecastingOrder forOrder = new ForecastingOrder(queue, order);
 		
-			pool.execute(forOrder);
+ 			pool.execute(forOrder);
 			logger.info("Creation of Order Producer ID: " + device.getIdDev() + " Successful");
 		}
 	}
